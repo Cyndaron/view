@@ -15,6 +15,7 @@ use function rtrim;
 final class TemplateFinder
 {
     private static array $templateRoots = [
+        'View' => __DIR__ . '/../',
     ];
 
     /**
