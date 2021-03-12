@@ -1,0 +1,65 @@
+{
+  "name": "cyndaron/view",
+  "description": "View and template components Cyndaron",
+  "license": "MIT",
+  "autoload": {
+    "psr-4": {
+      "Cyndaron\\View\\": "src/"
+    }
+  },
+  "repositories": [
+    {
+      "type": "vcs",
+      "url": "https://github.com/Cyndaron/module"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/Cyndaron/dbal"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/Cyndaron/util"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/Cyndaron/Cyndaron"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/Cyndaron/module-geelhoed"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/Cyndaron/module-minecraft"
+    },
+    {
+      "type": "vcs",
+      "url": "https://github.com/Cyndaron/module-ticketsale"
+    }
+  ],
+  "minimum-stability": "dev",
+  "prefer-stable": true,
+  "require": {
+    "php": "^7.4",
+    "thecodingmachine/safe": "^1.1",
+    "cyndaron/module": "^1.0",
+    "cyndaron/dbal": "^1.0",
+    "cyndaron/util": "9999999-dev"
+  },
+  "require-dev": {
+    "cyndaron/cyndaron": "dev-master",
+    "roave/security-advisories": "dev-master",
+    "phan/phan": "^3.0",
+    "thecodingmachine/phpstan-safe-rule": "^1.0",
+    "phpstan/phpstan": "^0.12.42",
+    "friendsofphp/php-cs-fixer": "^2.16"
+  },
+  "scripts": {
+    "phpstan": [
+      "vendor/bin/phpstan analyse src --level 8"
+    ],
+    "cscheck": [
+      "vendor/bin/php-cs-fixer fix src/ --allow-risky=yes --dry-run --diff"
+    ]
+  }
+}
