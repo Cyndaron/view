@@ -44,7 +44,9 @@
     "thecodingmachine/safe": "^1.1",
     "cyndaron/module": "^1.0",
     "cyndaron/dbal": "^1.0",
-    "cyndaron/util": "^1.0"
+    "cyndaron/util": "^1.0",
+    "illuminate/view": "^6.5",
+    "conedevelopment/blade-filters": "^0.7"
   },
   "require-dev": {
     "cyndaron/cyndaron": "dev-master",
