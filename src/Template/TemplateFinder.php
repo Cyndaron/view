@@ -10,7 +10,9 @@ use function explode;
 use function count;
 use function array_pop;
 use function implode;
+use function is_string;
 use function rtrim;
+use function assert;
 
 final class TemplateFinder
 {
@@ -80,6 +82,7 @@ final class TemplateFinder
         if (count($parts) > 1)
         {
             $name = array_pop($parts);
+            assert(is_string($name));
             $module = $parts[0];
             $parts = array_slice($parts, 1);
 

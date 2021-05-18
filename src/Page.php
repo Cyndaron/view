@@ -135,10 +135,12 @@ class Page
         foreach ($includes as $varName => $filename)
         {
             $this->templateVars[$varName] = '';
-            if (file_exists(__DIR__ . "/../$filename.php"))
+            /** @noinspection PhpUndefinedConstantInspection */
+            $fullPath = ROOT_PATH . "/$filename.php";
+            if (file_exists($fullPath))
             {
                 ob_start();
-                include __DIR__ . "/../$filename.php";
+                include $fullPath;
                 $this->templateVars[$varName] = ViewHelpers::parseText(ob_get_clean() ?: '');
             }
         }
