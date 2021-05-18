@@ -136,7 +136,7 @@ class Page
         {
             $this->templateVars[$varName] = '';
             /** @noinspection PhpUndefinedConstantInspection */
-            $fullPath = ROOT_PATH . "/$filename.php";
+            $fullPath = ROOT_DIR . "/$filename.php";
             if (file_exists($fullPath))
             {
                 ob_start();
