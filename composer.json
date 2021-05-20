@@ -40,16 +40,15 @@
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "php": "^7.4",
+    "php": "^7.4|^8.0",
     "thecodingmachine/safe": "^1.1",
     "cyndaron/module": "^1.0",
     "cyndaron/dbal": "^1.0",
     "cyndaron/util": "^1.0",
-    "illuminate/view": "^6.5",
+    "illuminate/view": "^8.42",
     "conedevelopment/blade-filters": "^0.7"
   },
   "require-dev": {
-    "cyndaron/cyndaron": "dev-master",
     "roave/security-advisories": "dev-master",
     "phan/phan": "^3.0",
     "thecodingmachine/phpstan-safe-rule": "^1.0",
