@@ -89,9 +89,14 @@ final class TemplateFinder
             $pathInModule = implode('/', $parts);
 
             $template = $this->searchPath("src/$module/$pathInModule/templates/", $name);
-            if ($template === null && array_key_exists($module, static::$templateRoots))
+            if ($template === null)
             {
-                $root = static::$templateRoots[$module];
+                $template = $this->searchPath("vendor/cyndaron/cyndaron/src/$module/$pathInModule/templates/", $name);
+            }
+
+            if ($template === null && array_key_exists($module, self::$templateRoots))
+            {
+                $root = self::$templateRoots[$module];
                 $template = $this->searchPath("$root/$pathInModule/templates/", $name);
             }
         }
@@ -101,6 +106,6 @@ final class TemplateFinder
 
     public static function addTemplateRoot(TemplateRoot $templateRoot): void
     {
-        static::$templateRoots[$templateRoot->name] = rtrim($templateRoot->root, '/');
+        self::$templateRoots[$templateRoot->name] = rtrim($templateRoot->root, '/');
     }
 }

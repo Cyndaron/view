@@ -1,30 +1,22 @@
 <?php
 namespace Cyndaron\View\Template;
 
-use Cyndaron\Photoalbum\Photoalbum;
-use Cyndaron\Photoalbum\PhotoalbumPage;
-use Cyndaron\User\User;
-use PhpOffice\PhpSpreadsheet\IOFactory;
-use PhpOffice\PhpSpreadsheet\Spreadsheet;
-
+use Cyndaron\View\Renderer\TextRenderer;
+use DateTimeInterface;
 use Safe\Exceptions\ArrayException;
 use Safe\Exceptions\DatetimeException;
-use function Safe\date;
-use function Safe\natsort;
-use function Safe\preg_replace;
-use function Safe\sprintf;
-use function Safe\strtotime;
-use function strip_tags;
-use function count;
-use function implode;
-use function array_slice;
-use function number_format;
-use function explode;
 use function array_key_exists;
-use function ob_start;
-use function ob_get_clean;
-use function preg_replace_callback;
+use function array_slice;
 use function array_unique;
+use function count;
+use function explode;
+use function implode;
+use function natsort;
+use function number_format;
+use function Safe\date;
+use function Safe\strtotime;
+use function sprintf;
+use function strip_tags;
 
 final class ViewHelpers
 {
@@ -44,7 +36,6 @@ final class ViewHelpers
         'delete' => 'btn-danger',
     ];
 
-    private const YOUTUBE = '<div class="embed-responsive embed-responsive-16by9"><iframe class="embed-responsive-item" src="https://www.youtube.com/embed/$1" sandbox="allow-scripts allow-same-origin allow-popups allow-presentation" allowfullscreen></iframe></div>';
 
     /**
      * Zet een maandnummer om in de naam.
@@ -97,12 +88,17 @@ final class ViewHelpers
 
     public static function formatEuro(float $amount): string
     {
-        return '€ ' . static::formatCurrency($amount);
+        return '€ ' . self::formatCurrency($amount);
     }
 
     public static function boolToText(?bool $bool): string
     {
         return $bool ? 'Ja' : 'Nee';
+    }
+
+    public static function boolToDingbat(?bool $bool): string
+    {
+        return $bool ? '✔' : '⨯';
     }
 
     public static function filterHm(string $hms): string
@@ -111,11 +107,18 @@ final class ViewHelpers
         return "$parts[0]:$parts[1]";
     }
 
-    public static function filterDutchDate(string $date): string
+    public static function filterDutchDate(string|DateTimeInterface $date): string
     {
         try
         {
-            $timestamp = strtotime($date);
+            if ($date instanceof DateTimeInterface)
+            {
+                $timestamp = (int)$date->format('U');
+            }
+            else
+            {
+                $timestamp = strtotime($date);
+            }
         }
         catch (DatetimeException $e)
         {
@@ -127,11 +130,18 @@ final class ViewHelpers
         return sprintf('%s %s %s', $day, $month, $year);
     }
 
-    public static function filterDutchDateTime(string $date): string
+    public static function filterDutchDateTime(string|DateTimeInterface $date): string
     {
         try
         {
-            $timestamp = strtotime($date);
+            if ($date instanceof DateTimeInterface)
+            {
+                $timestamp = (int)$date->format('U');
+            }
+            else
+            {
+                $timestamp = strtotime($date);
+            }
         }
         catch (DatetimeException $e)
         {
@@ -162,35 +172,10 @@ final class ViewHelpers
         return [$icon, $btnClass];
     }
 
-    public static function spreadsheetToString(Spreadsheet $spreadsheet): string
-    {
-        ob_start();
-        $writer = IOFactory::createWriter($spreadsheet, 'Xlsx');
-        $writer->save('php://output');
-        return ob_get_clean() ?: '';
-    }
-
     public static function parseText(string $text): string
     {
-        $text = preg_replace_callback('/%slider\|(\d+)%/', static function($matches)
-        {
-            $album = Photoalbum::loadFromDatabase($matches[1]);
-            if ($album !== null)
-            {
-                $page = new PhotoalbumPage($album, 1);
-                return $page->drawSlider($album);
-            }
-            return '';
-        }, $text);
-
-        $text = preg_replace('/%youtube\|([A-Za-z0-9_\-]+)%/', self::YOUTUBE, $text ?? '');
-
-        $text = preg_replace_callback('/%csrfToken\|([A-Za-z0-9_\-]+)\|([A-Za-z0-9_\-]+)%/', static function($matches)
-        {
-            return User::getCSRFToken($matches[1], $matches[2]);
-        }, $text);
-
-        return $text ?? '';
+        $textRenderer = new TextRenderer($text);
+        return $textRenderer->render();
     }
 
     /**

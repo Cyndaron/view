@@ -2,6 +2,7 @@
 
 namespace Cyndaron\View\Template;
 
+use Cyndaron\Util\Util;
 use Pine\BladeFilters\BladeFilters;
 
 final class ViewServiceProvider extends \Illuminate\View\ViewServiceProvider
@@ -12,11 +13,17 @@ final class ViewServiceProvider extends \Illuminate\View\ViewServiceProvider
         'dmy' => ViewHelpers::class . '::filterDutchDate',
         'dmyHm' => ViewHelpers::class . '::filterDutchDateTime',
         'boolToText' => ViewHelpers::class . '::boolToText',
+        'boolToDingbat' => ViewHelpers::class . '::boolToDingbat',
+        'slug' => Util::class . '::getSlug',
+        'parse' => ViewHelpers::class . '::parseText',
     ];
 
     public function register(): void
     {
-        parent::register();
+        $this->registerFactory();
+        $this->registerViewFinder();
+        $this->registerBladeCompiler();
+        $this->registerEngineResolver();
 
         foreach (self::FILTERS as $filterName => $function)
         {

@@ -7,61 +7,31 @@
       "Cyndaron\\View\\": "src/"
     }
   },
-  "repositories": [
-    {
-      "type": "vcs",
-      "url": "https://github.com/Cyndaron/module"
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/Cyndaron/dbal"
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/Cyndaron/util"
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/Cyndaron/Cyndaron"
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/Cyndaron/module-geelhoed"
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/Cyndaron/module-minecraft"
-    },
-    {
-      "type": "vcs",
-      "url": "https://github.com/Cyndaron/module-ticketsale"
-    }
-  ],
   "minimum-stability": "dev",
   "prefer-stable": true,
   "require": {
-    "php": "^7.4|^8.0",
-    "thecodingmachine/safe": "^1.1",
-    "cyndaron/module": "^1.0",
-    "cyndaron/dbal": "^1.0",
-    "cyndaron/util": "^1.0",
-    "illuminate/view": "^8.42",
-    "conedevelopment/blade-filters": "^0.7"
+    "php": "^8.1",
+    "thecodingmachine/safe": "^2.1",
+    "cyndaron/dbal": "^2.0",
+    "cyndaron/util": "^3.0",
+    "illuminate/view": "^10.0",
+    "conedevelopment/blade-filters": "*",
+    "cyndaron/module": "^1.1"
   },
   "require-dev": {
-    "cyndaron/cyndaron": "dev-master",
     "roave/security-advisories": "dev-master",
-    "phan/phan": "^3.0",
-    "thecodingmachine/phpstan-safe-rule": "^1.0",
-    "phpstan/phpstan": "^0.12.42",
-    "friendsofphp/php-cs-fixer": "^2.16"
+    "phpstan/phpstan": "*",
+    "friendsofphp/php-cs-fixer": "*"
   },
   "scripts": {
     "phpstan": [
       "vendor/bin/phpstan analyse src --level 8"
     ],
-    "cscheck": [
+    "cs-check": [
       "vendor/bin/php-cs-fixer fix src/ --allow-risky=yes --dry-run --diff"
+    ],
+    "cs-fix": [
+      "vendor/bin/php-cs-fixer fix src/ --allow-risky=yes"
     ]
   }
 }

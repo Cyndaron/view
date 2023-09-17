@@ -1,6 +1,4 @@
 parameters:
+    bootstrapFiles:
+      - .phpstan_bootstrap.php
     checkMissingIterableValueType: false
-    scanFiles:
-      - .phpstan.php
-includes:
-    - vendor/thecodingmachine/phpstan-safe-rule/phpstan-safe-rule.neon
